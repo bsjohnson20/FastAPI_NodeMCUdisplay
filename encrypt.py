@@ -3,7 +3,9 @@
 import os
 from cryptography.fernet import Fernet
 
+# disabled for now
 def encryptToken():
+    return
     # check if token.json exists and isn't encrypted
     if not os.path.exists("secrets/token.json"):
         return
@@ -25,6 +27,7 @@ def encryptToken():
     return
 
 def decryptToken():
+    return
     if not os.path.exists("secrets/token.json") or not os.path.exists("secrets/secrets/key.key"):
         return
     with open("secrets/key.key", "rb") as f:

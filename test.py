@@ -7,6 +7,7 @@ from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 
+from encrypt import decryptToken, encryptToken
 # If modifying these scopes, delete the file token.json.
 SCOPES = ["https://www.googleapis.com/auth/calendar.readonly"]
 
@@ -15,6 +16,7 @@ def main():
   """Shows basic usage of the Google Calendar API.
   Prints the start and name of the next 10 events on the user's calendar.
   """
+  
   creds = None
   # The file token.json stores the user's access and refresh tokens, and is
   # created automatically when the authorization flow completes for the first
@@ -22,6 +24,7 @@ def main():
   if not os.path.exists("secrets"):
     os.mkdir("secrets")
   if os.path.exists("secrets/token.json"):
+    decryptToken()
     creds = Credentials.from_authorized_user_file("secrets/token.json", SCOPES)
   else:
     creds = None
@@ -60,6 +63,7 @@ def main():
 
     if not events:
       print("No upcoming events found.")
+      encryptToken()
       return
 
     # Prints the start and name of the next 10 events
@@ -67,6 +71,7 @@ def main():
     for event in events:
       start = event["start"].get("dateTime", event["start"].get("date"))
       event_storage.append([start, event["summary"]])
+    encryptToken()
     return event_storage
       
 
@@ -75,5 +80,5 @@ def main():
 
 
 if __name__ == "__main__":
-  main()
+  print(main())
   
