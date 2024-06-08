@@ -1,5 +1,5 @@
 from typing import Union
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from fastapi import FastAPI, Depends
 from fastapi.security import APIKeyQuery
 import os
@@ -24,8 +24,24 @@ screenIndex = 0
 def fetchCalendar():
     # load from google calendar
     events = main() # date, event name
-    events = "\n".join([f"{event[1]}" for event in events])
-    return events
+    # calc days for each event from time now
+    # return events
+    if not events:
+        return "No upcoming events found."
+    else:
+        # calc
+        for event in events:
+            # extract days till event
+            event[0] = event[0].split("T")[0]
+            event[0] = datetime.strptime(event[0], "%Y-%m-%d")
+            event[0] = event[0] - datetime.now()
+            event[0] = event[0].days
+        # sort by days
+        events = sorted(events, key=lambda x: x[0])
+            
+        return "\n".join([f"{event[1]}: {event[0]}" for event in events])
+            
+
 
 
 timeSinceLastPoll = 0
@@ -107,7 +123,7 @@ def read_root():
     if screenList[screenIndex] == "favouritePony":
         return "Favourite pony:\n"+favouritePony()
     elif screenList[screenIndex] == "calendar":
-        return "Calendar:\n"+cache["calendar"]
+        return "Calendar - days till:\n"+cache["calendar"]
     elif screenList[screenIndex] == "time":
         return "Time:\n"+parseTime()
     elif screenList[screenIndex] == "weather":
