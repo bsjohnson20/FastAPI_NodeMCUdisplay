@@ -1,0 +1,9 @@
+token.json
+NodeMCU/NodeMCU - APIDisplay/src/secrets.h
+screens/time.txt
+screens/weather.txt
+weather.txt
+text.txt
+secrets/
+.env
+__pycache__/
