@@ -23,13 +23,16 @@ def main():
     os.mkdir("secrets")
   if os.path.exists("secrets/token.json"):
     creds = Credentials.from_authorized_user_file("secrets/token.json", SCOPES)
+  else:
+    creds = None
+
   # If there are no (valid) credentials available, let the user log in.
   if not creds or not creds.valid:
     if creds and creds.expired and creds.refresh_token:
       creds.refresh(Request())
     else:
       flow = InstalledAppFlow.from_client_secrets_file(
-          "credentials.json", SCOPES
+          "secrets/credentials.json", SCOPES
       )
       creds = flow.run_local_server(port=0)
     # Save the credentials for the next run
@@ -69,3 +72,8 @@ def main():
 
   except HttpError as error:
     print(f"An error occurred: {error}")
+
+
+if __name__ == "__main__":
+  main()
+  
