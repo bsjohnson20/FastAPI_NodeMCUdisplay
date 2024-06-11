@@ -105,7 +105,7 @@ The NodeMCU will attempt to connect, then send a get request to the ipaddr:9000/
 This project is under license from MIT. For more details, see the [LICENSE](LICENSE.md) file.
 
 
-Made with :heart: by <a href="https://github.com/bsjohnson20" target="_blank">{{YOUR_NAME}}</a>
+Made with :heart: by <a href="https://github.com/bsjohnson20" target="_blank">BSJOHNSON20</a>
 
 &#xa0;
 
